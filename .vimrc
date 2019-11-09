@@ -1,4 +1,4 @@
-yntax enable           " enable syntax processing
+syntax enable           " enable syntax processing
 
 " spaces and tabs
 set tabstop=2       " number of visual spaces per TAB
@@ -38,7 +38,7 @@ set showmode
 set title
 set showcmd
 set scrolloff=4
-
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 nnoremap ; :
 vnoremap ; :
 
@@ -87,6 +87,11 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'elixir-editors/vim-elixir'
 Plug 'ntk148v/vim-horizon'
+Plug 'slashmili/alchemist.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'terryma/vim-multiple-cursors'
+Plug 'scrooloose/nerdtree'
 
 call plug#end()
 

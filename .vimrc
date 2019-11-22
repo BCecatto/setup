@@ -23,7 +23,6 @@ set ignorecase
 
 set showmatch
 set nocompatible
-set clipboard=unnamed
 set wildmenu
 set esckeys
 set backspace=indent,eol,start
@@ -39,13 +38,25 @@ set title
 set showcmd
 set scrolloff=4
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+set background=dark
+set clipboard=unnamed
+syntax on
+
 nnoremap ; :
 vnoremap ; :
+
+" copy and paste commands
+noremap <c-y> "+y
+noremap <c-p> "+p
+
+" nerdtree
+nmap <silent> <leader>n :call NERDTreeCWD()<cr>
 
 cnoreabbrev vsf vert<space>sf
 
 " FZF fuzzy finder
 set rtp+=/usr/local/opt/fzf
+let g:ackprg = 'ag --vimgrep'
 
 " fd finder https://github.com/sharkdp/fd
 
@@ -86,16 +97,82 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'elixir-editors/vim-elixir'
-Plug 'ntk148v/vim-horizon'
 Plug 'slashmili/alchemist.vim'
 Plug 'dyng/ctrlsf.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdtree'
-
+Plug 'elixir-editors/vim-elixir'                                                                                                  
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'dense-analysis/ale'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
+Plug 'natebosch/vim-lsc'
+Plug 'natebosch/vim-lsc-dart'
+Plug 'janko-m/vim-test'
+Plug 'morhetz/gruvbox'
+Plug 'jiangmiao/auto-pairs'
+Plug 'benmills/vimux'
 call plug#end()
 
-color horizon
+" color schema
+colo gruvbox
+
+" Prompt for a command to run
+map <Leader>vp :VimuxPromptCommand<CR>
+map <Leader>vz :VimuxZoomRunner<CR>
+map <Leader>vt :VimuxTogglePane
+" tabs commands
+nmap <Leader>t :tabnew<CR>
+nmap <Leader>tn :tabn<CR>
+nmap <Leader>tp :tabp<CR>
+
+" run tests
+nmap <Leader>rs :TestFile<CR>
+nmap <Leader>rn :TestNearest<CR>
+nmap <Leader>rl :TestLast<CR>
+nmap <Leader>ra :TestSuite<CR>
+nmap <Leader>rv :TestVisit<CR>
+
+" CtrlP config
+let g:ctrlp_switch_buffer = 'et'
+let g:ctrlp_use_caching = 0
+set wildignore+=*/node_modules/*,*/_build/*,*/deps/*,*/.elixir_ls/*
+
+" Config lsc dart
+let g:lsc_auto_map = v:true
+
+" Vim flutter key mappgin
+nnoremap <leader>fa :FlutterRun<cr>
+nnoremap <leader>fq :FlutterQuit<cr>
+nnoremap <leader>fr :FlutterHotReload<cr>
+nnoremap <leader>fR :FlutterHotRestart<cr>
+nnoremap <leader>fD :FlutterVisualDebug<cr>
+
+let g:ale_linters = {
+			\   'elixir': ['elixir-ls'],
+			\}
+
+let g:ale_fixers = {
+			\   'elixir': ['mix_format'],
+			\}
+let g:ale_elixir_elixir_ls_release='~/.asdf/installs/elixir/1.9.1'
+
+let g:ale_completion_enabled = 1
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+highlight ALEErrorSign ctermbg=NONE ctermfg=white
+highlight ALEWarningSign ctermbg=NONE ctermfg=white
+let g:ale_linters_explicit = 1
+let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
+
+noremap <Leader>ad :ALEGoToDefinition<CR>
+noremap <leader>af :ALEFix<cr>
+noremap <Leader>ar :ALEFindReferences<CR>
 
 " Column color for elixir files
 augroup elixir

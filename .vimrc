@@ -1,4 +1,8 @@
 syntax enable           " enable syntax processing
+filetype indent on    " Enable filetype-specific indenting
+filetype plugin on    " Enable filetype-specific plugins
+filetype on           " Enable filetype detection
+set nocompatible      " We're running Vim, not Vi!
 
 " spaces and tabs
 set tabstop=2       " number of visual spaces per TAB
@@ -59,7 +63,6 @@ set rtp+=/usr/local/opt/fzf
 let g:ackprg = 'ag --vimgrep'
 
 " fd finder https://github.com/sharkdp/fd
-
 command FV call fzf#run({'source': 'fd', 'sink': 'vsp', 'options': '-m', 'down': '30%'})
 command FS call fzf#run({'source': 'fd', 'sink': 'sp', 'options': '-m', 'down': '30%'})
 command FE call fzf#run({'source': 'fd', 'sink': 'e', 'options': '-m', 'down': '30%'})
@@ -114,7 +117,16 @@ Plug 'janko-m/vim-test'
 Plug 'morhetz/gruvbox'
 Plug 'jiangmiao/auto-pairs'
 Plug 'benmills/vimux'
+Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+Plug 'Shougo/neocomplete.vim'
+
 call plug#end()
+
+" save
+nmap <Leader>q :q<CR>
+nmap <Leader>w :w<CR>
 
 " color schema
 colo gruvbox
@@ -123,6 +135,7 @@ colo gruvbox
 map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vz :VimuxZoomRunner<CR>
 map <Leader>vt :VimuxTogglePane
+
 " tabs commands
 nmap <Leader>t :tabnew<CR>
 nmap <Leader>tn :tabn<CR>

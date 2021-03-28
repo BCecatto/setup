@@ -53,6 +53,22 @@ vnoremap ; :
 noremap <c-y> "+y
 noremap <c-p> "+p
 
+
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'ruby': ['~/.asdf/shims/solargraph', 'stdio'],
+    \ }
+
+" note that if you are using Plug mapping you should not use `noremap` mappings.
+nmap <F5> <Plug>(lcn-menu)
+" Or map each action separately
+nmap <silent>K <Plug>(lcn-hover)
+nmap <silent> gd <Plug>(lcn-definition)
+nmap <silent> <F2> <Plug>(lcn-rename)
+
 " nerdtree
 nmap <silent> <leader>n :call NERDTreeCWD()<cr>
 
@@ -98,7 +114,13 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
 Plug 'elixir-editors/vim-elixir'
 Plug 'slashmili/alchemist.vim'
 Plug 'dyng/ctrlsf.vim'
@@ -106,7 +128,10 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdtree'
 Plug 'elixir-editors/vim-elixir'                                                                                                  
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'neoclide/coc-solargraph'
 Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-bundler'
+Plug 'ervandew/supertab'
 Plug 'tpope/vim-surround'
 Plug 'dense-analysis/ale'
 Plug 'dart-lang/dart-vim-plugin'
